@@ -32,17 +32,6 @@ A stylish and intelligent movie recommender system built with **Streamlit**. Jus
 - `similarity.pkl`: Precomputed cosine similarity matrix  
   → Hosted here: [Hugging Face Repo](https://huggingface.co/datasets/Krishna-Radharani-123/movie-recommender-assets)
 
----
-
-## 🚀 Run the App Locally
-
->  **Requires Python 3.7+**
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/movie-recommender.git
-cd movie-recommender
 
 
 
