@@ -43,14 +43,6 @@ A stylish and intelligent movie recommender system built with **Streamlit**. Jus
 ```bash
 git clone https://github.com/your-username/movie-recommender.git
 cd movie-recommender
-### 2. Install dependencies
-```bash
-pip install -r requirements.txt
-### 3. Run the app
-```bash
-streamlit run app.py
-### 4.Screenshot
-![Screenshot 2025-05-30 141845](https://github.com/user-attachments/assets/b2bd7d16-4c7c-4600-99e4-69253cba5713)
 
 
 
