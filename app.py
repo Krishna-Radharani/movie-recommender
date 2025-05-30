@@ -75,12 +75,12 @@ def recommend(movie):
 st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="wide")
 
 st.markdown("""
-    <h1 style='text-align: center; color: #FF4B4B;'>🎬 Movie Recommender</h1>
+    <h1 style='text-align: center; color: #FF4B4B; font-size: 48px;'>🎬 Movie Recommender</h1>
     <h4 style='text-align: center; color: gray;'>Pick a movie and get 5 similar ones with posters!</h4>
-    <hr>
+    <hr style='border:1px solid #eee'>
 """, unsafe_allow_html=True)
 
-# Centered layout
+# Centered input
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     selected_movie_name = st.selectbox(
@@ -93,9 +93,13 @@ with col2:
     if selected_movie_name and st.button("🎯 Recommend"):
         names, posters, overviews = recommend(selected_movie_name)
         if names:
-            st.markdown("### 🎥 Recommendations")
-            cols = st.columns(5)
+            st.markdown("## 🎥 Recommendations\n", unsafe_allow_html=True)
+
             for i in range(5):
-                with cols[i]:
-                    st.image(posters[i], caption=names[i], use_container_width=True)
-                    st.caption(overviews[i])
+                with st.container():
+                    cols = st.columns([1, 2])
+                    with cols[0]:
+                        st.image(posters[i], width=200, caption=names[i])
+                    with cols[1]:
+                        st.markdown(f"<p style='font-size: 16px; text-align: justify;'>{overviews[i]}</p>", unsafe_allow_html=True)
+                    st.markdown("---")
