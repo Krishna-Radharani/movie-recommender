@@ -8,9 +8,11 @@ import urllib.request
 
 # ===== Download similarity.pkl from Hugging Face if not exists =====
 SIMILARITY_FILE = "similarity.pkl"
+HF_URL = "https://huggingface.co/datasets/Krishna-Radharani-123/movie-recommender-assets/resolve/main/similarity.pkl"
+
 if not os.path.exists(SIMILARITY_FILE):
-    url = "https://huggingface.co/datasets/Krishna-Radharani-123/movie-recommender-assets/resolve/main/similarity.pkl"
-    urllib.request.urlretrieve(url, SIMILARITY_FILE)
+    urllib.request.urlretrieve(HF_URL, SIMILARITY_FILE)
+
 
 # ===== Load data =====
 with open('movie_dict.pkl', 'rb') as f:
