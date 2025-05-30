@@ -114,7 +114,6 @@ st.markdown("""
 
 st.markdown("""
     <h1 style='text-align: center; color: #FF4B4B; font-size: 48px;'>🎬 Movie Recommender</h1>
-    <h4 style='text-align: center; color: gray;'>Pick a movie and get 5 similar ones with posters!</h4>
     <hr class='custom-line'>
 """, unsafe_allow_html=True)
 
