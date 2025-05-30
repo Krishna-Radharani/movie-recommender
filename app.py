@@ -4,13 +4,13 @@ import pandas as pd
 import requests
 import time
 import os
-import gdown
+import urllib.request
 
-# ===== Download similarity.pkl from Google Drive if not exists =====
+# ===== Download similarity.pkl from Hugging Face if not exists =====
 SIMILARITY_FILE = "similarity.pkl"
 if not os.path.exists(SIMILARITY_FILE):
-    url = "https://drive.google.com/uc?id=1s5vnCT_K9-OeqlOJVn__WqA-v6rZ1WaE"
-    gdown.download(url, SIMILARITY_FILE, quiet=False)
+    url = "https://huggingface.co/datasets/Krishna-Radharani-123/movie-recommender-assets/resolve/main/similarity.pkl"
+    urllib.request.urlretrieve(url, SIMILARITY_FILE)
 
 # ===== Load data =====
 with open('movie_dict.pkl', 'rb') as f:
