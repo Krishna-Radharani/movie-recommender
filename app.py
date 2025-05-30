@@ -70,13 +70,52 @@ def recommend(movie):
         st.error(f"Recommendation failed: {e}")
         return [], [], []
 
-
 # ===== Streamlit UI =====
 st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="wide")
 
 st.markdown("""
+    <style>
+        .recommend-box {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background: #f9f9f9;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .recommend-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .movie-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+            color: #444;
+        }
+        .movie-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 5px 0;
+            color: #d6336c;
+        }
+        hr.custom-line {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 30px 0;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
     <h1 style='text-align: center; color: #FF4B4B; font-size: 48px;'>🎬 Movie Recommender</h1>
-    <hr style='border:1px solid #eee'>
+    <h4 style='text-align: center; color: gray;'>Pick a movie and get 5 similar ones with posters!</h4>
+    <hr class='custom-line'>
 """, unsafe_allow_html=True)
 
 # Centered input
@@ -92,13 +131,15 @@ with col2:
     if selected_movie_name and st.button("🎯 Recommend"):
         names, posters, overviews = recommend(selected_movie_name)
         if names:
-            st.markdown("## 🎥 Recommendations\n", unsafe_allow_html=True)
+            st.markdown("## 🎥 Recommendations\n")
 
             for i in range(5):
-                with st.container():
-                    cols = st.columns([1, 2])
-                    with cols[0]:
-                        st.image(posters[i], width=200, caption=names[i])
-                    with cols[1]:
-                        st.markdown(f"<p style='font-size: 16px; text-align: justify;'>{overviews[i]}</p>", unsafe_allow_html=True)
-                    st.markdown("---")
+                st.markdown(f"""
+                <div class='recommend-box'>
+                    <img src="{posters[i]}" width="150px" style="border-radius: 8px;" />
+                    <div>
+                        <div class='movie-title'>{names[i]}</div>
+                        <div class='movie-desc'>{overviews[i]}</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
