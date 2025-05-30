@@ -33,6 +33,9 @@ A stylish and intelligent movie recommender system built with **Streamlit**. Jus
   → Hosted here: [Hugging Face Repo](https://huggingface.co/datasets/Krishna-Radharani-123/movie-recommender-assets)
 
 
+## 📸 Screenshot
+
+![Movie Recommender Screenshot](image.png)
 
 
 
