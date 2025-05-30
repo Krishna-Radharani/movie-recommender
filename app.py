@@ -3,6 +3,24 @@ import pickle
 import pandas as pd
 import requests
 import time
+import os
+import gdown
+import pickle
+
+url = "https://drive.google.com/uc?export=download&id=1s5vnCT_K9-OeqlOJVn__WqA-v6rZ1WaE"
+output = "similarity.pkl"
+
+# Download if not already present
+if not os.path.exists(output):
+    gdown.download(url, output, quiet=False)
+
+# Load the pickle file
+with open(output, 'rb') as f:
+    similarity = pickle.load(f)
+
+# Optional: confirm
+print("similarity.pkl loaded successfully!")
+
 
 # Cache posters to avoid repeated requests
 poster_cache = {}
