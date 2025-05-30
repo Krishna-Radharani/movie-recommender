@@ -6,13 +6,12 @@ import time
 import os
 import urllib.request
 
-# ===== Download similarity.pkl from Hugging Face if not exists =====
+# ===== Download similarity.pkl from Hugging Face =====
 SIMILARITY_FILE = "similarity.pkl"
 HF_URL = "https://huggingface.co/datasets/Krishna-Radharani-123/movie-recommender-assets/resolve/main/similarity.pkl"
 
 if not os.path.exists(SIMILARITY_FILE):
     urllib.request.urlretrieve(HF_URL, SIMILARITY_FILE)
-
 
 # ===== Load data =====
 with open('movie_dict.pkl', 'rb') as f:
@@ -25,9 +24,10 @@ with open(SIMILARITY_FILE, 'rb') as f:
 # ===== Poster Cache =====
 poster_cache = {}
 
+
 def fetch_poster(movie_id):
     if movie_id in poster_cache:
-        return poster_cache[movie_id]
+        return poster_cache[movie_id], ""
 
     try:
         response = requests.get(
@@ -36,13 +36,15 @@ def fetch_poster(movie_id):
         response.raise_for_status()
         data = response.json()
         poster_path = data.get("poster_path")
+        overview = data.get("overview", "No description available.")
         poster_url = f"https://image.tmdb.org/t/p/w500/{poster_path}" if poster_path else "https://via.placeholder.com/500x750?text=No+Image"
     except Exception as e:
-        print(f"[ERROR] Poster fetch failed for ID {movie_id}: {e}")
         poster_url = "https://via.placeholder.com/500x750?text=No+Image"
+        overview = "Description unavailable."
 
-    poster_cache[movie_id] = poster_url
-    return poster_url
+    poster_cache[movie_id] = (poster_url, overview)
+    return poster_url, overview
+
 
 # ===== Recommendation Logic =====
 def recommend(movie):
@@ -53,31 +55,47 @@ def recommend(movie):
 
         recommended_titles = []
         recommended_posters = []
+        recommended_overviews = []
 
         for i in movie_list:
             movie_id = movies.iloc[i[0]].id
             recommended_titles.append(movies.iloc[i[0]].title)
-            recommended_posters.append(fetch_poster(movie_id))
+            poster, overview = fetch_poster(movie_id)
+            recommended_posters.append(poster)
+            recommended_overviews.append(overview)
             time.sleep(0.2)  # Prevent rate limiting
 
-        return recommended_titles, recommended_posters
+        return recommended_titles, recommended_posters, recommended_overviews
     except Exception as e:
         st.error(f"Recommendation failed: {e}")
-        return [], []
+        return [], [], []
+
 
 # ===== Streamlit UI =====
-st.title('🎬 Movie Recommender System')
+st.set_page_config(page_title="Movie Recommender", page_icon="🎬", layout="wide")
 
-selected_movie_name = st.selectbox(
-    "Pick a movie to get recommendations:",
-    movies['title'].values
-)
+st.markdown("""
+    <h1 style='text-align: center; color: #FF4B4B;'>🎬 Movie Recommender</h1>
+    <h4 style='text-align: center; color: gray;'>Pick a movie and get 5 similar ones with posters!</h4>
+    <hr>
+""", unsafe_allow_html=True)
 
-if st.button("Recommend"):
-    names, posters = recommend(selected_movie_name)
-    if names:
-        cols = st.columns(5)
-        for i in range(5):
-            with cols[i]:
-                st.markdown(f"**{names[i]}**")
-                st.image(posters[i], use_container_width=True)
+# Centered layout
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    selected_movie_name = st.selectbox(
+        "Select a movie you like:",
+        movies['title'].values,
+        index=None,
+        placeholder="Start typing to search..."
+    )
+
+    if selected_movie_name and st.button("🎯 Recommend"):
+        names, posters, overviews = recommend(selected_movie_name)
+        if names:
+            st.markdown("### 🎥 Recommendations")
+            cols = st.columns(5)
+            for i in range(5):
+                with cols[i]:
+                    st.image(posters[i], caption=names[i], use_container_width=True)
+                    st.caption(overviews[i])
