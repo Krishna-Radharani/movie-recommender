@@ -8,11 +8,11 @@ A stylish and intelligent movie recommender system built with **Streamlit**. Jus
 
 ## ✨ Features
 
-- 🔍 Search from thousands of movies
-- 🎥 Get 5 intelligent movie recommendations
-- 🖼️ Includes posters & descriptions via TMDB
-- 💡 Hover animations and responsive layout
-- ⚡ Runs instantly online via Streamlit Cloud
+-  Search from thousands of movies
+-  Get 5 intelligent movie recommendations
+-  Includes posters & descriptions via TMDB
+-  Hover animations and responsive layout
+-  Runs instantly online via Streamlit Cloud
 
 ---
 
@@ -36,10 +36,24 @@ A stylish and intelligent movie recommender system built with **Streamlit**. Jus
 
 ## 🚀 Run the App Locally
 
-> 🐍 **Requires Python 3.7+**
+>  **Requires Python 3.7+**
 
 ### 1. Clone the repository
 
 ```bash
 git clone https://github.com/your-username/movie-recommender.git
 cd movie-recommender
+### 2. Install dependencies
+```bash
+pip install -r requirements.txt
+### 3. Run the app
+```bash
+streamlit run app.py
+### 4.Screenshot
+![Screenshot 2025-05-30 141845](https://github.com/user-attachments/assets/b2bd7d16-4c7c-4600-99e4-69253cba5713)
+
+
+
+
+
+
