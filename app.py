@@ -133,8 +133,11 @@ with col2:
             st.markdown("## 🎥 Recommendations\n")
 
             for i in range(5):
+                movie_title_encoded = names[i].replace(" ", "+")
                 youtube_query = f"{names[i]} official trailer"
                 youtube_search_url = f"https://www.youtube.com/results?search_query={youtube_query.replace(' ', '+')}"
+
+                justwatch_url = f"https://www.justwatch.com/in/search?q={movie_title_encoded}"
 
                 st.markdown(f"""
                 <div class='recommend-box'>
@@ -143,7 +146,9 @@ with col2:
                         <div class='movie-title'>{names[i]}</div>
                         <div class='movie-desc'>{overviews[i]}</div>
                         <a href="{youtube_search_url}" target="_blank" style="display:inline-block;margin-top:10px;padding:6px 12px;background-color:#FF4B4B;color:white;border-radius:6px;text-decoration:none;">▶ Watch Trailer</a>
+                        <a href="{justwatch_url}" target="_blank" style="display:inline-block;margin-top:10px;margin-left:10px;padding:6px 12px;background-color:#20c997;color:white;border-radius:6px;text-decoration:none;">📺 Streaming Info</a>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
+
 
