@@ -131,7 +131,6 @@ with col2:
         names, posters, overviews = recommend(selected_movie_name)
         if names:
             st.markdown("## 🎥 Recommendations\n")
-
             for i in range(5):
                 movie_title_encoded = names[i].replace(" ", "+")
                 youtube_query = f"{names[i]} official trailer"
